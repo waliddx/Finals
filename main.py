@@ -4,7 +4,7 @@ import sqlite3, hashlib, os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = keys.database
+app.secret_key = keys.database;  """ change it with you own key """
 
 """
 images folder configurations
