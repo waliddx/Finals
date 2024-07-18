@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/topStyle.css') }}" />
+</head>
+<body>
+    <div id="title">
+        <a href="/">
+            <img id="logo" src="{{ url_for('static', filename='images/logo.png') }}" />
+        </a>
+        <form class="form">
+            <input id="searchBox" type="text" name="searchQuery" placeholder="Search...">
+            <input id="searchButton" type="submit" value="Search">
+        </form>
+
+        {% if not loggedIn %}
+        <div id="signInButton">
+            <a class="link" href="/loginForm">Sign In</a>
+        </div>
+        {% else %}
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img src="{{ url_for('static', filename='images/utilisateur.png')}}" alt="">
+                <span>
+                    {{firstName}}
+                </span>       
+            </button>    
+            <div class="dropdown-content">
+                <a href="/account/profile">Your profile</a>
+                <hr>
+                <a href="/logout">Sign Out</a>
+            </div>
+        </div>
+        {% endif %}
+        <div id="kart">
+            <a class="link" href="/cart">
+                <img src="{{ url_for('static', filename='images/shoppingCart.png') }}" id="cartIcon" />
+                <div class="puiss">
+					<span>{{ noOfItems }}</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="display">
+        <div class="displayCategory">
+            <h2>Shop by Category: </h2>
+            <ul>
+                {% for row in categoryData %}
+                <li><a href="/displayCategory?categoryId={{ row[0] }}">{{ row[1] }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="displayItems">
+            <h2>Clothes you may like:</h2>
+            {% for data in itemData %}
+            <table>
+                <tr id="productName">
+                    {% for row in data %}
+                    <td>{{ row[1] }}</td>
+                    {% endfor %}
+                </tr>
+                <tr id="productImage">
+                    {% for row in data %}
+                    <td>
+                        <a href="/productDescription?productId={{ row[0] }}">
+                            <img src="{{ url_for('static', filename='uploads/' + row[4]) }}" id="itemImage" />
+                        </a>
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr id="productPrice">
+                    {% for row in data %}
+                    <td>${{ row[2] }}</td>
+                    {% endfor %}
+                </tr>
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
