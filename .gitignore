@@ -1,0 +1,7 @@
+# files ignore
+keys.py
+
+
+# folders ignore 
+env/
+__pycache__/
