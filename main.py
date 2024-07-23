@@ -370,7 +370,7 @@ def create_app():
                 filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
     def parse(data):
-        '''This function parse databse data'''
+        '''This function parse databse's data'''
 
         ans= []
         i= 0
