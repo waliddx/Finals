@@ -1,14 +1,14 @@
+"""
+Creating a basic database using
+the sqlite3 module 
+"""
+
 import sqlite3
 
-"""
-opening database
-"""
+''' Connecting to sqlite3 database'''
 conn = sqlite3.connect('database.db')
 
-
-"""
-creating table
-"""
+'''Creating tables'''
 conn.execute('''CREATE TABLE users 
 		(userId INTEGER PRIMARY KEY, 
 		password TEXT,
@@ -40,7 +40,5 @@ conn.execute('''CREATE TABLE categories
 		(categoryId INTEGER PRIMARY KEY,
 		name TEXT
 		)''')
-
-
 
 conn.close()
