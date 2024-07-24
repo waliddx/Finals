@@ -11,7 +11,7 @@ def create_app():
     '''app & database configurations'''
 
     app= Flask(__name__)
-    app.secret_key= os.getenv("DATABASE")
+    app.secret_key= "stringnom"
     UPLOAD_FOLDER= 'static/uploads'
     ALLOWED_EXTENSIONS= set(['jpeg', 'jpg', 'png', 'gif'])
     app.config['UPLOAD_FOLDER']= UPLOAD_FOLDER
