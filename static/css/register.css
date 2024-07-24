@@ -2,6 +2,8 @@
 
 *{
 	font-family: 'Poppins', sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -12,7 +14,6 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
 }
 
 .container {
@@ -81,19 +82,4 @@ a {
 
 a:hover {
     text-decoration: underline;
-}
-
-@media (max-width: 600px) {
-    .container {
-        padding: 15px;
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-        width: calc(100% - 16px);
-        padding: 8px;
-    }
-    input[type="submit"] {
-        padding: 8px 16px;
-    }
 }

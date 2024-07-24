@@ -50,19 +50,3 @@
 .item-form input[type="submit"]:hover {
     background-color: #0056b3;
 }
-
-@media (max-width: 600px) {
-    .item-form {
-        padding: 15px;
-    }
-    .item-form input[type="text"],
-    .item-form input[type="file"],
-    .item-form textarea,
-    .item-form select {
-        width: calc(100% - 16px);
-        padding: 8px;
-    }
-    .item-form input[type="submit"] {
-        padding: 8px 16px;
-    }
-}
