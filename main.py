@@ -1,6 +1,6 @@
 """
-Flask application that integrate 
-admin and client sides
+Flask application that interacts 
+with the admin and client sides
 """
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3, hashlib, os
@@ -46,7 +46,7 @@ def create_app():
             cur.execute('SELECT categoryId, name FROM categories')
             categoryData= cur.fetchall()
         itemData= parse(itemData)   
-        return render_template('home.html', itemData=itemData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryData=categoryData)
+        return render_template('home.html', custom_css="home", pagetitle="Home", itemData=itemData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryData=categoryData)
 
     @app.route("/add")
     def admin():
@@ -57,7 +57,7 @@ def create_app():
             cur.execute("SELECT categoryId, name FROM categories")
             categories= cur.fetchall()
         conn.close()
-        return render_template('items.html', categories=categories)
+        return render_template('items.html', custom_css="items", pagetitle="Home | Items", categories=categories)
 
 
     @app.route("/addItem", methods=["GET", "POST"])
@@ -99,7 +99,7 @@ def create_app():
             cur.execute('SELECT productId, name, price, description, image, stock FROM products')
             data= cur.fetchall()
         conn.close()
-        return render_template('remove.html', data=data)
+        return render_template('remove.html', custom_css= "remove", pagetitle= "Home | Remove", data=data)
 
 
     @app.route("/removeItem")
@@ -120,10 +120,9 @@ def create_app():
         print(msg)
         return redirect(url_for('root'))
 
-
     @app.route("/displayCategory")
     def displayCategory():      
-        '''This function return items found within thedatabase'''
+        '''This function return items found within the database'''
 
         loggedIn, firstName, noOfItems= getLoginDetails()
         categoryId= request.args.get("categoryId")
@@ -135,9 +134,9 @@ def create_app():
             conn.close()
             categoryName= data[0][4]
             data= parse(data)
-            return render_template('displayCategory.html', data=data, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryName=categoryName)
+            return render_template('displayCategory.html', custom_css= "home", pagetitle= "Home | Category", data=data, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryName=categoryName)
         except:
-            return render_template('displayCategory.html')
+            return render_template('displayCategory.html', custom_css= "home", pagetitle= "Home | Category")
 
 
     @app.route("/account/profile")
@@ -147,7 +146,7 @@ def create_app():
         if 'email' not in session:
             return redirect(url_for('root'))
         loggedIn, firstName, noOfItems= getLoginDetails()
-        return render_template("profileHome.html", loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
+        return render_template("profileHome.html", custom_css= "profile", pagetitle= "Home | Profile", loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
 
     @app.route("/account/profile/edit")
     def editProfile():
@@ -155,12 +154,12 @@ def create_app():
         if 'email' not in session:
             return redirect(url_for('root'))
         loggedIn, firstName, noOfItems= getLoginDetails()
-        with sqlite3.connect('database.db') as conn:
-            cur= conn.cursor()
+        with sqlite3.connect('database.db') as con:
+            cur= con.cursor()
             cur.execute("SELECT userId, email, firstName, lastName, address1 FROM users WHERE email= ?", (session['email'], ))
             profileData= cur.fetchone()
-        conn.close()
-        return render_template("editProfile.html", profileData=profileData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
+        con.close()
+        return render_template("editProfile.html", custom_css= "edit", pagetitle= "Home | edit" ,profileData=profileData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
 
     @app.route("/updateProfile", methods=["GET", "POST"])
     def updateProfile():
@@ -189,6 +188,7 @@ def create_app():
 
         if 'email' not in session:
             return redirect(url_for('loginForm'))
+        loggedIn, firstName, noOfItems= getLoginDetails()
         if request.method == "POST":
             oldPassword= request.form['oldpassword']
             oldPassword= hashlib.md5(oldPassword.encode()).hexdigest()
@@ -206,14 +206,13 @@ def create_app():
                     except:
                         conn.rollback()
                         msg= "Failed"
-                    return render_template("changePassword.html", msg=msg)
+                    return render_template("changePassword.html", custom_css="password", pagetitle="Home | Password", msg=msg, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
                 else:
                     msg= "Wrong password"
             conn.close()
-            return render_template("changePassword.html", msg=msg)
+            return render_template("changePassword.html", custom_css="password", pagetitle="Home | password", msg=msg, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
         else:
-            return render_template("changePassword.html")
-
+            return render_template("changePassword.html",  custom_css="password", pagetitle="Home | password", loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
 
     @app.route("/loginForm")
     def loginForm():
@@ -234,7 +233,7 @@ def create_app():
             if is_valid(email, password):
                 session['email']= email
                 return redirect(url_for('root'))
-            error= 'Invalid UserId / Password'
+            error= 'Invalid Email or Password'
             return render_template('login.html', error=error)
 
     @app.route("/productDescription")
@@ -248,7 +247,7 @@ def create_app():
             cur.execute('SELECT productId, name, price, description, image, stock FROM products WHERE productId= ?', (productId, ))
             productData= cur.fetchone()
         conn.close()
-        return render_template("productDescription.html", data=productData, loggedIn= loggedIn, firstName= firstName, noOfItems= noOfItems)
+        return render_template("productDescription.html", custom_css= "productDescription", pagetitle= "Home | Description",  data=productData, loggedIn= loggedIn, firstName= firstName, noOfItems= noOfItems)
 
     @app.route("/addToCart")
     def addToCart():
@@ -289,7 +288,7 @@ def create_app():
         totalPrice= 0
         for row in products:
             totalPrice += row[2]
-        return render_template("cart.html", products= products, totalPrice= totalPrice, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
+        return render_template("cart.html", custom_css="cart", pagetitle="Home | Cart", products= products, totalPrice= totalPrice, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
 
     @app.route("/removeFromCart")
     def removeFromCart():
