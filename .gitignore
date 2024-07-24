@@ -1,7 +1,8 @@
-# files ignore
-keys.py
+# ignore environement varable
+.env
 
-
-# folders ignore 
+# ignore virtual environement folder
 env/
+
+# ignore Flask specefic files
 __pycache__/
