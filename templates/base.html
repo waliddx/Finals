@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{pagetitle}}</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/topStyle.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + custom_css + '.css') }}" />
+</head>
+<body>
+    <div id="top-title">
+        <a href="/">
+            <img id="top-logo" src="{{ url_for('static', filename='images/logo.png') }}" />
+        </a>
+        <form class="top-form">
+            <input id="top-searchBox" type="text" name="searchQuery" placeholder="Search...">
+            <input id="top-searchButton" type="submit" value="Search">
+        </form>
+        {% if not loggedIn %}
+        <div id="top-signInButton">
+            <a class="top-link" href="/loginForm">Sign In</a>
+        </div>
+        {% else %}
+        <div class="top-dropdown">
+            <button class="top-dropbtn">
+                <img src="{{ url_for('static', filename='images/utilisateur.png')}}" alt="">
+                <span>
+                    {{firstName}}
+                </span>       
+            </button>    
+            <div class="top-dropdown-content">
+                <a href="/account/profile">Your profile</a>
+                <hr>
+                <a href="/logout">Sign Out</a>
+            </div>
+        </div>
+        {% endif %}
+        <div id="top-kart">
+            <a class="top-link" href="/cart">
+                <img src="{{ url_for('static', filename='images/shoppingCart.png') }}" id="top-cartIcon" />
+                <div class="top-puiss">
+					<span>{{ noOfItems }}</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% block content %} {% endblock %}
+</body>
+</html>

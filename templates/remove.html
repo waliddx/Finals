@@ -1,39 +1,31 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Remove</title>
-	<link rel="icon" href="{{ url_for('static', filename='images/logo.png')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='css/remove.css')}}">
-</head>
-<body>
-	<div id="removeItems">
-		<h2>all Items:</h2>
-		<div id="tableItems">
-			{% for row in data %}
-			<div>
-				<hr id="seperator">
-				{% for i in range(6) %}
-				{% if i == 4 %}
-				<div id="itemImage">
-					<img src="{{url_for('static', filename='uploads/' + row[i])}}" id="image"/>
-				</div>
-				{% endif %}
-				{% endfor %}
-				<div id="itemName">
-					<span id="itemNameTag">Item_Id: {{row[0]}}</span><br>
-					<span id="itemNameTag">{{row[1]}}</span><br>
-
-					In stock<br>
-					<a href="/removeItem?productId={{row[0]}}">remove</a>
-				</div>
-				<div id="itemPrice">
-					${{row[2]}}
-				</div>
-			</div>
-			{% endfor %}
+{% extends 'base.html' %}
+{% block content %}
+<div id="removeItems">
+	<h2>all Items:</h2>
+	<div id="tableItems">
+		{% for row in data %}
+		<div>
 			<hr id="seperator">
+			{% for i in range(6) %}
+			{% if i == 4 %}
+			<div id="itemImage">
+				<img src="{{url_for('static', filename='uploads/' + row[i])}}" id="image"/>
+			</div>
+			{% endif %}
+			{% endfor %}
+			<div id="itemName">
+				<span id="itemNameTag">Item_Id: {{row[0]}}</span><br>
+				<span id="itemNameTag">{{row[1]}}</span><br>
+
+				In stock<br>
+				<a href="/removeItem?productId={{row[0]}}">remove</a>
+			</div>
+			<div id="itemPrice">
+				${{row[2]}}
+			</div>
 		</div>
+		{% endfor %}
+		<hr id="seperator">
 	</div>
-</body>
-</html>
+</div>
+{% endblock %}

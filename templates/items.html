@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-    <title>Add Items</title>
-	<link rel="icon" href="{{ url_for('static', filename='images/logo.png')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/items.css') }}">
-</head>
-<body>
-    <h2>Add Items</h2>
-    <form action="/addItem" method="POST" enctype="multipart/form-data">
+{% extends 'base.html' %}
+{% block content %}
+<div class="item-container">
+    <h2>Add Item:</h2>
+    <form class="item-form" action="/addItem" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name">
@@ -33,7 +27,7 @@
             <label for="category">Category:</label>
             <select id="category" name="category">
                 {% for row in categories %}
-                    <option value="{{row[0]}}">{{row[1]}}</option>
+                <option value="{{row[0]}}">{{row[1]}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -41,5 +35,6 @@
             <input type="submit" value="Add Item">
         </div>
     </form>
-</body>
-</html>
+</div>
+    {% endblock %}
+    
