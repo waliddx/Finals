@@ -1,17 +1,19 @@
 # Clothes market
 
-A simple e-commerce website 
+A simple e-commerce website
 
-# Dependencies 
+## Dependencies
 
-- ## Mandatory dependencies: 
-  - Python3
-  - Flask
-  - Sqlite3
+### Mandatory dependencies
 
-# How to run
+- Python3
+- Flask
+- Sqlite3
+
+### How to run
 
 To run this project follow these instructions down below:
+
 ```bash
 # Setup a virtual environnemnt to avoid dependencies conflicts
 $ python -m venv env
@@ -26,4 +28,4 @@ $ python database.py
 $ python run.py
 ```
 
-- Finally, Go to your browser and search "localhost:5000" 
+- Finally, Go to your browser and search "localhost:5000"
