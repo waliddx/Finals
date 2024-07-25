@@ -5,12 +5,12 @@ the sqlite3 module
 
 import sqlite3
 
-''' Connecting to sqlite3 database'''
+''' Create and Connect to sqlite3 database'''
 conn = sqlite3.connect('database.db')
 
 '''Creating tables'''
-conn.execute('''CREATE TABLE users 
-		(userId INTEGER PRIMARY KEY, 
+conn.execute('''CREATE TABLE if not exists users(
+		userId INTEGER PRIMARY KEY, 
 		password TEXT,
 		email TEXT,
 		firstName TEXT,
@@ -18,8 +18,8 @@ conn.execute('''CREATE TABLE users
 		address1 TEXT
 		)''')
 
-conn.execute('''CREATE TABLE products
-		(productId INTEGER PRIMARY KEY,
+conn.execute('''CREATE TABLE if not exists products(
+		productId INTEGER PRIMARY KEY,
 		name TEXT,
 		price REAL,
 		description TEXT,
@@ -29,15 +29,15 @@ conn.execute('''CREATE TABLE products
 		FOREIGN KEY(categoryId) REFERENCES categories(categoryId)
 		)''')
 
-conn.execute('''CREATE TABLE kart
-		(userId INTEGER,
+conn.execute('''CREATE TABLE if not exists kart(
+		userId INTEGER,
 		productId INTEGER,
 		FOREIGN KEY(userId) REFERENCES users(userId),
 		FOREIGN KEY(productId) REFERENCES products(productId)
 		)''')
 
-conn.execute('''CREATE TABLE categories
-		(categoryId INTEGER PRIMARY KEY,
+conn.execute('''CREATE TABLE if not exists categories(
+		categoryId INTEGER PRIMARY KEY,
 		name TEXT
 		)''')
 
